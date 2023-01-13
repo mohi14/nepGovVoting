@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 
 const Questions = ({ quiz, setQuiz, checked, setChecked, handleClick }) => {
-  // const [quiz, setQuiz] = useState(false);
-  // const [checked, setChecked] = useState(false);
 
-  // const handleClick = () => {
-  //   setChecked(true);
-  //   setQuiz(true);
-  // };
 
   return (
     <div>

@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Questions from "./Questions";
 import QuestionOne from "./Questions/QuestionOne";
+
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./VoteNow.css";
 const VoteNow = () => {
-  const [quiz, setQuiz] = useState(false);
-  const [checked, setChecked] = useState(false);
-
-  const handleClick = () => {
-    setChecked(true);
-    setQuiz(true);
-  };
-
-  // useEffect(() => {
-  //   console.log("asdf", newQuestions);
-  // }, [newQuestions]);
-
   const [isReady, setIsready] = useState(true);
 
   const [activeQuestion, setActiveQuestion] = useState(1);
@@ -24,28 +14,18 @@ const VoteNow = () => {
   const handleYes = () => {
     setIsready(false);
     const newQuestions = [];
-    for (let i = 0; i < activeQuestion; i++) {
-      const n = allQuestions[i];
-      if (n !== undefined) {
-        newQuestions.push(n);
+
+    setTimeout(() => {
+      for (let i = 0; i < activeQuestion; i++) {
+        const n = allQuestions[i];
+        if (n !== undefined) {
+          newQuestions.push(n);
+        }
       }
-    }
-    setActiveQuestion(activeQuestion + 1);
-    setQ(newQuestions);
+      setActiveQuestion(activeQuestion + 1);
+      setQ(newQuestions);
+    }, 1500);
   };
-
-  // const [activeQuestion, setActiveQuestion] = useState(1);
-  // const allQuestions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  // const [q, setQ] = useState([1]);
-  // const handleCount = () => {
-  //   // console.log(newQuestions);
-  // };
-
-  // console.log(q);
-
-  // // console.log(newQuestions.length, newQuestions);
-
-  // const showQuestion = () => {};
 
   return (
     <div className="pt-20 background ">
@@ -100,33 +80,6 @@ const VoteNow = () => {
       </div>
 
       <>
-        {/* <div className="bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] ">
-          <Questions
-            quiz={quiz}
-            setQuiz={setQuiz}
-            checked={checked}
-            setChecked={setChecked}
-            handleClick={handleClick}
-          />
-        </div> */}
-        {/* {quiz ? (
-          <div className="bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] ">
-            <QuestionOne></QuestionOne>
-          </div>
-        ) : (
-          ""
-        )}
-
-        <div className="bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] quiz">
-          <Questions
-            quiz={quiz}
-            setQuiz={setQuiz}
-            checked={checked}
-            setChecked={setChecked}
-            handleClick={handleClick}
-          ></Questions>
-        </div> */}
-
         {isReady && (
           <div className=" bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] ">
             <h2 className="text-xl font-bold text-center mb-20">
@@ -140,20 +93,23 @@ const VoteNow = () => {
             </div>
           </div>
         )}
-        <div className="flex flex-col-reverse ">
-          {q.map((question, idx) => (
-            <div className=" bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] ">
-              <QuestionOne
-                handleYes={handleYes}
-                question={question}
-                checked={checked}
-                handleClick={handleClick}
-              />
-              {/* <button className="btn btn-primary" onClick={handleCount}>
-              next
-            </button> */}
-            </div>
-          ))}
+
+        <div style={{ overflow: "hidden" }}>
+          <TransitionGroup component="ul" className="flex flex-col-reverse ">
+            {q.map((question, idx) => (
+              <CSSTransition key={idx} timeout={700} classNames="item">
+                <div
+                  className={` ${
+                    idx >= 1
+                      ? "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] wow slideInDown"
+                      : "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px]"
+                  }`}
+                >
+                  <QuestionOne handleYes={handleYes} question={question} />
+                </div>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         </div>
       </>
     </div>

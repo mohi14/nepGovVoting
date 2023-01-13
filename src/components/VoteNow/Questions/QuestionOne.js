@@ -1,46 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
+import ProgressBar from "./ProgressBar/ProgressBar";
 
-const QuestionOne = ({
-  handleYes,
-  quiz,
-  setQuiz,
-  checked,
-  setChecked,
-  handleClick,
-  question,
-}) => {
-  const isChecked = useRef(false);
+const QuestionOne = ({ handleYes, question }) => {
+  const percentage = "20";
 
   const [isSelected, setIsSelected] = useState(false);
 
-  // console.log("hello", isChecked);
-
-  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const onChange = (id) => {
-    // Find index
-    const findIdx = selectedCheckboxes.indexOf(id);
-
-    console.log(findIdx);
-
-    // Index > -1 means that the item exists and that the checkbox is checked
-    // and in that case we want to remove it from the array and uncheck it
-    if (findIdx > -1) {
-      selectedCheckboxes.splice(findIdx, 1);
-    } else {
-      selectedCheckboxes.push(id);
-    }
-    console.log(selectedCheckboxes);
-
-    setSelectedCheckboxes(selectedCheckboxes);
     handleYes();
-    // handleClick();
-
     setIsSelected(true);
   };
 
-  useEffect(() => {
-    // console.log("asdf", selectedCheckboxes);
-  }, [selectedCheckboxes]);
+  if (isSelected) {
+    setTimeout(() => {
+      if (isSelected) {
+        let progressBars = document.querySelectorAll(".progress-bar");
+        let values = "90%";
+
+        progressBars.forEach((progress, index) => {
+          progress.style.width = values;
+        });
+      }
+    }, 0);
+  }
 
   return (
     <div className="mb-32">
@@ -65,10 +47,7 @@ const QuestionOne = ({
       </div>
 
       <div className="bg-[#808DA5] w-[100px]  text-white mt-[30px] ml-[64px]">
-        <p className="px-[10px] pb-1">
-          {" "}
-          Question {question} {selectedCheckboxes}{" "}
-        </p>
+        <p className="px-[10px] pb-1">Question {question}</p>
       </div>
 
       <div className="ml-[64px]">
@@ -85,26 +64,18 @@ const QuestionOne = ({
               type="checkbox"
               className="checkbox"
               onClick={() => onChange(value)}
-              selected={selectedCheckboxes.includes(index)}
-              ref={isChecked}
               disabled={isSelected}
             />
             {isSelected ? (
               <label className="ml-3 w-full">
                 <div className="flex justify-between">
                   <p>Somewhat support</p>
-                  <p>50%</p>
+                  <p>{percentage}%</p>
                 </div>
-                <progress
-                  className="progress w-full progress-primary rounded-none"
-                  value="50"
-                  max="100"
-                ></progress>
+                <ProgressBar></ProgressBar>
               </label>
             ) : (
-              <label className="ml-3 w-full" onClick={handleClick}>
-                Somewhat support
-              </label>
+              <label className="ml-3 w-full">Somewhat support</label>
             )}
           </div>
         ))}
