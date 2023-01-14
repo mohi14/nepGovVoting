@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from "react";
-import Questions from "./Questions";
+import React, { useContext, useEffect, useState } from "react";
 import QuestionOne from "./Questions/QuestionOne";
 
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./VoteNow.css";
+import { QuestionContext } from "../../Contexts/ContextsProvider";
 const VoteNow = () => {
-  const [isReady, setIsready] = useState(true);
+  const { handleYes, q } = useContext(QuestionContext);
+  // const [isReady, setIsready] = useState(true);
 
-  const [activeQuestion, setActiveQuestion] = useState(1);
-  const allQuestions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const [q, setQ] = useState([]);
+  // const [activeQuestion, setActiveQuestion] = useState(1);
+  // const allQuestions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // const [q, setQ] = useState([]);
 
-  const handleYes = () => {
-    setIsready(false);
-    const newQuestions = [];
+  // const handleYes = () => {
+  //   setIsready(false);
+  //   const newQuestions = [];
 
-    setTimeout(() => {
-      for (let i = 0; i < activeQuestion; i++) {
-        const n = allQuestions[i];
-        if (n !== undefined) {
-          newQuestions.push(n);
-        }
-      }
-      setActiveQuestion(activeQuestion + 1);
-      setQ(newQuestions);
-    }, 1500);
-  };
+  //   setTimeout(() => {
+  //     for (let i = 0; i < activeQuestion; i++) {
+  //       const n = allQuestions[i];
+  //       if (n !== undefined) {
+  //         newQuestions.push(n);
+  //       }
+  //     }
+  //     setActiveQuestion(activeQuestion + 1);
+  //     setQ(newQuestions);
+  //   }, 1500);
+  // };
 
   return (
     <div className="pt-20 background ">
@@ -80,7 +81,7 @@ const VoteNow = () => {
       </div>
 
       <>
-        {isReady && (
+        {/* {isReady && (
           <div className=" bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] ">
             <h2 className="text-xl font-bold text-center mb-20">
               Are you ready to vote?
@@ -92,24 +93,20 @@ const VoteNow = () => {
               <button className="btn btn-secondary">No</button>
             </div>
           </div>
-        )}
+        )} */}
 
-        <div style={{ overflow: "hidden" }}>
-          <TransitionGroup component="ul" className="flex flex-col-reverse ">
-            {q.map((question, idx) => (
-              <CSSTransition key={idx} timeout={700} classNames="item">
-                <div
-                  className={` ${
-                    idx >= 1
-                      ? "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] wow slideInDown"
-                      : "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px]"
-                  }`}
-                >
-                  <QuestionOne handleYes={handleYes} question={question} />
-                </div>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
+        <div style={{ overflow: "hidden" }} className="flex flex-col-reverse ">
+          {q.map((question, idx) => (
+            <div
+              className={` ${
+                idx >= 1
+                  ? "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] wow slideInDown"
+                  : "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px]"
+              }`}
+            >
+              <QuestionOne handleYes={handleYes} question={question} />
+            </div>
+          ))}
         </div>
       </>
     </div>

@@ -2,6 +2,28 @@ import React, { useEffect, useRef, useState } from "react";
 import ProgressBar from "./ProgressBar/ProgressBar";
 
 const QuestionOne = ({ handleYes, question }) => {
+  const Answers = [
+    {
+      name: "Somewhat support",
+      ratio: "90%",
+    },
+    {
+      name: "Strongly support",
+      ratio: "80%",
+    },
+    {
+      name: "Somewhat oppose",
+      ratio: "70%",
+    },
+    {
+      name: "Strongly oppose",
+      ratio: "60%",
+    },
+    {
+      name: "Don't know",
+      ratio: "80%",
+    },
+  ];
   const percentage = "20";
 
   const [isSelected, setIsSelected] = useState(false);
@@ -10,17 +32,17 @@ const QuestionOne = ({ handleYes, question }) => {
     handleYes();
     setIsSelected(true);
   };
-
+  const [newValues, setNewValues] = useState([]);
   if (isSelected) {
     setTimeout(() => {
-      if (isSelected) {
+      Answers.map((value) => {
         let progressBars = document.querySelectorAll(".progress-bar");
-        let values = "90%";
-
+        // let values = [value.ratio];
+        setNewValues(value.ratio);
         progressBars.forEach((progress, index) => {
-          progress.style.width = values;
+          progress.style.width = "80%";
         });
-      }
+      });
     }, 0);
   }
 
@@ -58,7 +80,7 @@ const QuestionOne = ({ handleYes, question }) => {
       </div>
 
       <div className="ml-[64px]">
-        {[0, 1, 2, 3].map((value, index) => (
+        {Answers.map((value, index) => (
           <div className="flex mb-[28px] mt-[30px]">
             <input
               type="checkbox"
@@ -69,13 +91,13 @@ const QuestionOne = ({ handleYes, question }) => {
             {isSelected ? (
               <label className="ml-3 w-full">
                 <div className="flex justify-between">
-                  <p>Somewhat support</p>
-                  <p>{percentage}%</p>
+                  <p>{value.name}</p>
+                  <p>{value.ratio}</p>
                 </div>
                 <ProgressBar></ProgressBar>
               </label>
             ) : (
-              <label className="ml-3 w-full">Somewhat support</label>
+              <label className="ml-3 w-full">{value.name}</label>
             )}
           </div>
         ))}

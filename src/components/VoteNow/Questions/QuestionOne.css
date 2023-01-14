@@ -1,0 +1,20 @@
+.progress-box .progress-line{
+    width: 100%;
+    margin-top: 10px;
+}
+.progress-box .progress-line .progress-container{
+    background-color: #b1b1b1;
+    height: 4px;
+    margin-top: 15px;
+    
+}
+.progress-box .progress-line .progress-container .progress-bar{
+    height: 100%;
+    width: 0%;
+    background-color: #3560AD;
+    position: relative;
+    transition: all 1.5s;
+   
+}
+
+

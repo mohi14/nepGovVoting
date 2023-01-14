@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { QuestionContext } from "../../Contexts/ContextsProvider";
 import "./Home.css";
 
 const Home = () => {
+  const { handleYes } = useContext(QuestionContext);
   return (
     <div className="vote-now  w-[630px] m-auto mt-20 text-white">
       <div className="p-[25px]">
@@ -30,7 +32,10 @@ const Home = () => {
           Christmas? Plus, present wrapping, and Christmas pudding
         </p>
         <Link to="/vote-now">
-          <button className="btn w-full bg-white border-0 rounded-[50px]">
+          <button
+            className="btn w-full bg-white border-0 rounded-[50px]"
+            onClick={handleYes}
+          >
             <span className="text-[#3560AD] text-lg font-bold normal-case">
               Vote Now
             </span>{" "}
