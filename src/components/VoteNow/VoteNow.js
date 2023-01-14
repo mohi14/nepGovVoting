@@ -98,7 +98,7 @@ const VoteNow = () => {
         <div style={{ overflow: "hidden" }} className="flex flex-col-reverse ">
           {q.map((question, idx) => (
             <div
-              className={` ${
+              className={`${
                 idx >= 1
                   ? "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px] wow slideInDown"
                   : "bg-white w-[685px]  m-auto rounded-[7px] p-[30px] mt-[20px]"
